@@ -1,4 +1,5 @@
 Screencat
+[![Build Status](https://travis-ci.org/jlindsey/screencat.svg?branch=master)](https://travis-ci.org/jlindsey/screencat)
 =========
 
 Screenshot sharing tool using the excellent [Sendcat](https://sendcat.com/) service.
