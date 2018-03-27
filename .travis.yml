@@ -31,11 +31,6 @@ deploy:
   on:
     tags: true
 
-branches:
-  only:
-  - master
-  - "/^\\d+\\.\\d+\\.\\d+.*$/"
-
 notifications:
   email:
-on_success: never
+    on_success: never
