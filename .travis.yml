@@ -1,0 +1,41 @@
+---
+language: rust
+cache: cargo
+
+env:
+  global:
+  - PROJECT_NAME=screencat
+
+matrix:
+  include:
+  - os: linux
+    rust: stable
+    env: TARGET=x86_64-unknown-linux-gnu
+  - os: osx
+    rust: stable
+    env: TARGET=x86_64-apple-darwin
+
+script:
+- bash scripts/build.sh
+
+before_deploy:
+- bash scripts/before_deploy.sh
+
+deploy:
+  provider: releases
+  api_key:
+    secure: kV3etdajEW8z8SRR+M6kjg5kOttf162V5jFYcEN8E/EQi9ks8ldH8S5oh1yFGnSOjY6pCxZj3Cw83OAfSukWR03rAFDFGOYCxkB8zvycVfjMlLp5y1tdUuOTRTF4Or+HfOpyBIhimBgRn08VfZXkoY3yQXChTBBpCT5Ad4F7wtmCejDWbXcZbZ/fzswGNjZUmDxDF0LX5UttGWFfUpaMgwl3LeJ73fcurg8jTR4IdJ3pAzN1KMqmPaMgD31DCa7csJ0YVJxXuedWHpW7+qsaxeZUSzQQnKEluHRdx8447TivuRA5r5w9FPbHmzN86sKojej942TK+Im+rqubmARCTO2FtKR7UCBwi7kw9I8XFxF3pJRY1d+G0bqiCLHfpvhuELVBIJXOtz8Iv6jpHeoAd4MyMc0zm2rirKYNvistwCB6iggU1NxD+KiEJdJBKI9DoS0/W3ty7oxpZLALO17N+ZbwkV9eJuOHbgFZZN3o0DvRxIkg5WklHD2JXv829O189R/k0zWJsdUaXu+emHvo2r69O5o62vLw93irwlc+LVBn+ySktI/pgLPlKXZGKrJdI+8ut5GxHfBIHb5mQGirY/1LVYpQtLovXaRY8dv2dRWbtZxpy7+DltGx43MK32ZpCmrMQ4QHg+4eV9jkf5kBUY2yg5g7EiqzTVlD0zjtasM=
+  file_glob: true
+  file: "${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}.*"
+  skip_cleanup: true
+  on:
+    tags: true
+
+branches:
+  only:
+  - master
+  - "/^\\d+\\.\\d+\\.\\d+.*$/"
+
+notifications:
+  email:
+on_success: never
