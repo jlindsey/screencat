@@ -2,7 +2,9 @@ Screencat
 [![Build Status](https://travis-ci.org/jlindsey/screencat.svg?branch=master)](https://travis-ci.org/jlindsey/screencat)
 =========
 
-Screenshot sharing tool using the excellent [Sendcat](https://sendcat.com/) service.
+Screenshot sharing tool using the excellent [Sendcat](https://sendcat.com/) service.o
+
+See the [releases](https://github.com/jlindsey/screencat/releases) page for pre-built binaries.
 
 Requirements
 ------------
