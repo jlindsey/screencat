@@ -10,10 +10,12 @@ matrix:
   include:
   - os: linux
     rust: stable
-    env: TARGET=x86_64-unknown-linux-gnu
+    env: 
+      - TARGET=x86_64-unknown-linux-gnu
   - os: osx
     rust: stable
-    env: TARGET=x86_64-apple-darwin
+    env:
+     - TARGET=x86_64-apple-darwin
 
 script:
 - bash scripts/build.sh
