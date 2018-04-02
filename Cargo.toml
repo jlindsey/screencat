@@ -4,6 +4,12 @@ version = "1.0.0"
 authors = ["Josh Lindsey <joshua.s.lindsey@gmail.com>"]
 license = "GPL-3.0-or-later"
 
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1
+incremental = false
+
 [dependencies]
 notify = "4.0.3"
 error-chain = "0.11"

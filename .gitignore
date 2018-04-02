@@ -51,6 +51,7 @@ Session.vim
 *~
 # auto-generated tag files
 tags
+tags.*
 
 ### VisualStudioCode ###
 .vscode/*
@@ -62,3 +63,4 @@ tags
 
 
 # End of https://www.gitignore.io/api/visualstudiocode,vim,osx,rust
+.envrc
