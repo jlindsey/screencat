@@ -119,9 +119,8 @@ impl FSWatcher {
         debug!("parsed URL from output: {}", url);
 
         self.copy_url_to_clipboard(url)?;
-        if cfg!(target_os = "macos") {
-            self.show_os_notification(url)?;
-        }
+        #[cfg(target_os = "macos")]
+        self.show_os_notification(url)?;
 
         debug!("removing original screenshot: {}", path);
         fs::remove_file(path)?;
