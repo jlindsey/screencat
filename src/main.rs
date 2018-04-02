@@ -24,6 +24,7 @@ extern crate clap;
 extern crate screencat;
 
 use screencat::errors::*;
+use std::env;
 use std::process::exit;
 
 fn main() {
@@ -46,11 +47,17 @@ fn run() -> Result<()> {
     let args = init_cli();
     screencat::init_logging();
 
+    debug!("env var sanity check:");
+    for (key, value) in env::vars() {
+        debug!("{} = {}", key, value);
+    }
+
     debug!("args: {:?}", args);
 
     let watch_path = args.value_of("watch_dir").unwrap();
+    let regex = args.value_of("regex").unwrap();
 
-    let watcher = screencat::fs_watcher::FSWatcher::new(watch_path, 500)?;
+    let watcher = screencat::fs_watcher::FSWatcher::new(watch_path, regex, 500)?;
     watcher.start()
 }
 
@@ -62,5 +69,11 @@ fn init_cli<'a>() -> clap::ArgMatches<'a> {
             .takes_value(true)
             .default_value("~/Desktop")
             .help("Directory to watch for FS events"))
+        .arg(clap::Arg::with_name("regex")
+            .short("r")
+            .long("regex")
+            .takes_value(true)
+            .default_value(r"Screen Shot .* at .*\.png$")
+            .help("Regex to match FS events again for screenshots"))
     .get_matches()
 }

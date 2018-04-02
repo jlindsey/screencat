@@ -20,6 +20,7 @@ use ::errors::*;
 
 use ::std::borrow::Borrow;
 use ::std::cell::RefCell;
+use ::std::env;
 use ::std::fs;
 use ::std::path::Path;
 use ::std::process::{Command, Stdio};
@@ -51,14 +52,13 @@ pub struct FSWatcher {
 }
 
 impl FSWatcher {
-    pub fn new(watch_path: &str, delay: u64) -> Result<Self> {
+    pub fn new(watch_path: &str, regex_str: &str, delay: u64) -> Result<Self> {
         let (tx, rx) = channel::<DebouncedEvent>();
         let watcher = watcher(tx, Duration::from_millis(delay))?;
         let real_path = shellexpand::tilde(watch_path);
         let ctx: ClipboardContext = ClipboardProvider::new().expect("unable to initialize clipboard context");
 
-        // Screen Shot 2018-03-07 at 2.58.20 PM
-        let re = regex::Regex::new(r"Screen Shot .* at .*\.png$")?;
+        let re = regex::Regex::new(regex_str)?;
 
         Ok(FSWatcher{
             rx: rx,
@@ -99,14 +99,18 @@ impl FSWatcher {
 
         info!("New screenshot: {}", path);
 
-        let new_path = format!("/tmp/{}.png", self.rand_file_name());
+        let mut new_path = env::temp_dir();
+        new_path.push(self.rand_file_name());
+        debug!("copying to tmp file {:?}", new_path);
         fs::copy(path, &new_path)?;
 
+        debug!("running sendcat");
         let output = Command::new("sendcat")
                              .arg("-j")
                              .arg(&new_path)
                              .stdin(Stdio::inherit())
-                             .output()?;
+                             .output()
+                             .chain_err(|| "error while running sendcat")?;
 
         debug!("sendcat output: {:?}", output);
 
@@ -115,9 +119,14 @@ impl FSWatcher {
         debug!("parsed URL from output: {}", url);
 
         self.copy_url_to_clipboard(url)?;
-        self.show_os_notification(url)?;
+        if cfg!(target_os = "macos") {
+            self.show_os_notification(url)?;
+        }
 
+        debug!("removing original screenshot: {}", path);
         fs::remove_file(path)?;
+
+        debug!("removing tmp file: {:?}", new_path);
         fs::remove_file(new_path)?;
 
         Ok(())
@@ -136,6 +145,7 @@ impl FSWatcher {
         Ok(())
     }
 
+    #[cfg(target_os = "macos")]
     fn show_os_notification(&self, url: &str) -> Result<()> {
         let cmd = Command::new("terminal-notifier")
                           .args(&["-title", "Screencat"])
