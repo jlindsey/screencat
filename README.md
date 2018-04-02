@@ -1,6 +1,8 @@
 Screencat
-[![Build Status](https://travis-ci.org/jlindsey/screencat.svg?branch=master)](https://travis-ci.org/jlindsey/screencat)
 =========
+
+[![Github Release](https://img.shields.io/github/release/jlindsey/screencat.svg)](https://github.com/jlindsey/screencat/releases)
+[![Build Status](https://travis-ci.org/jlindsey/screencat.svg?branch=master)](https://travis-ci.org/jlindsey/screencat)
 
 Screenshot sharing tool using the excellent [Sendcat](https://sendcat.com/) service.o
 
@@ -11,6 +13,9 @@ Requirements
 
 This tool requires at least Sendcat v0.0.10, or any later version with the `-j` flag
 for JSON output.
+
+If you are on macOS, you can install the [terminal-notifier](https://github.com/julienXX/terminal-notifier)
+tool to get desktop toast notifications when a screenshot is uploaded.
 
 Usage
 -----
