@@ -11,7 +11,7 @@ mkdir "$build_dir/$name"
 
 cp target/$TARGET/release/$PROJECT_NAME "$build_dir/$name/"
 strip $build_dir/$name/$PROJECT_NAME
-cp {LICENSE} "$build_dir/$name/"
+cp LICENSE "$build_dir/$name/"
 
 pushd $build_dir
 tar czf "$out_dir/$name.tar.gz" *
