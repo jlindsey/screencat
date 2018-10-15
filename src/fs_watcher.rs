@@ -115,7 +115,13 @@ impl FSWatcher {
         debug!("sendcat output: {:?}", output);
 
         let out: SendcatOutput = serde_json::from_slice(&output.stdout)?;
-        let url = &out.share_files[0].url;
+        let mut url = "";
+        for file in &out.share_files {
+            if file.url != "STDIN.txt" {
+                url = &file.url;
+                break
+            }
+        }
         debug!("parsed URL from output: {}", url);
 
         self.copy_url_to_clipboard(url)?;
