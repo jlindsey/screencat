@@ -3,6 +3,7 @@ Screencat
 
 [![Github Release](https://img.shields.io/github/release/jlindsey/screencat.svg)](https://github.com/jlindsey/screencat/releases/latest)
 [![Build Status](https://travis-ci.org/jlindsey/screencat.svg?branch=master)](https://travis-ci.org/jlindsey/screencat)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjlindsey%2Fscreencat.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjlindsey%2Fscreencat?ref=badge_shield)
 
 Screenshot sharing tool using the excellent [Sendcat](https://sendcat.com/) service.
 
@@ -47,3 +48,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjlindsey%2Fscreencat.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjlindsey%2Fscreencat?ref=badge_large)
